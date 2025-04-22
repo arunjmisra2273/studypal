@@ -4,6 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from pydantic import BaseModel
 
+# Import custom dependencies
+from get_llm_response import get_llm_response
+
 # Create FastAPI instance
 app = FastAPI()
 
@@ -35,7 +38,8 @@ async def answer_question(input_request: InputRequest) -> OutputResponse:
     """
     # Extract the question from the input request
     question = input_request.question
-    answer = "Here is a generic answer"
+    answer = get_llm_response(question)  # Get the answer from the LLM
+    # Return the answer in the output response model
     return OutputResponse(answer=answer)
 
 # Only runs if you do python main.py
